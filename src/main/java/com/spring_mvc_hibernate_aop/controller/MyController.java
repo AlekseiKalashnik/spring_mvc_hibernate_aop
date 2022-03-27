@@ -1,5 +1,6 @@
 package com.spring_mvc_hibernate_aop.controller;
 
+import com.spring_mvc_hibernate_aop.Service.EmployeeService;
 import com.spring_mvc_hibernate_aop.dao.EmployeeDAO;
 import com.spring_mvc_hibernate_aop.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,11 @@ import java.util.List;
 public class MyController {
 
     @Autowired
-    private EmployeeDAO employeeDAO;
+    private EmployeeService employeeService;
 
     @RequestMapping("/")
     public String showAllEmployees(Model model) {
-        List<Employee> allEmployees = employeeDAO.getAllEmployees();
+        List<Employee> allEmployees = employeeService.getAllEmployees();
         model.addAttribute("allEmps", allEmployees);
         return "all-employees";
     }
