@@ -41,6 +41,15 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     @Override
     public void saveEmployee(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(employee);
+        session.saveOrUpdate(employee);
+        //если id=0, то внесет работника в базу,
+        // если id!=0,то обновит существующего по его id
+    }
+
+    @Override
+    public Employee getEmployee(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Employee employee = session.get(Employee.class, id);
+        return employee;
     }
 }
