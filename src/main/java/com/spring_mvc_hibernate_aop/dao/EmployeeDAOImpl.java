@@ -28,8 +28,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         Session session = sessionFactory.getCurrentSession();
         List<Employee> allEmployees = session.createQuery("from Employee",
                         Employee.class).getResultList();
-        /*получаем всех работников из базы. Employee - имя класса
-        */
+        /*получаем всех работников из базы. Employee - имя класса*/
         /*второй вариант использования через Query:
         Query<Employee> query = session.createQuery("from Employee",
                 Employee.class);
@@ -51,5 +50,17 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         Session session = sessionFactory.getCurrentSession();
         Employee employee = session.get(Employee.class, id);
         return employee;
+    }
+
+    @Override
+    public void deleteEmployee(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Employee> query = session.createQuery("delete FROM Employee " +
+                "where id =:employeeId");
+        /*:employeeId - означает что вместо этой записи мы потом пропишем для этого запроса параметр.
+        *то есть это будет заменяться на id работника принятого в параметре*/
+        query.setParameter("employeeId", id);
+        //произойдет замена названия параметра на само значение этого параметра, с помощью setParameter
+        query.executeUpdate();
     }
 }
